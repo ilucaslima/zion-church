@@ -30,10 +30,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       console.log(email, password);
       const response = await api.post("/users/auth", { email, password });
-      setUser(response.data);
+      setUser(response.data.user);
       toast.success("Login realizado com sucesso");
       Cookies.set("session", response.data.token);
-      Cookies.set("user", JSON.stringify(response.data));
+      Cookies.set("user", JSON.stringify(response.data.user));
       router.push("/dashboard");
     } catch (error) {
       if (AppError.isAxiosError(error)) {
