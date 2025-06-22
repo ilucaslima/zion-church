@@ -7,9 +7,11 @@ import { useAuth } from "@/hooks/useAuth";
 import { loginSchema, LoginSchemaType } from "@/schemas/authSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 export default function LoginPage() {
   const { signIn } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -19,10 +21,13 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
 
-  const handleSignIn = (data: LoginSchemaType) => {
-    signIn({
+  const handleSignIn = async (data: LoginSchemaType) => {
+    setIsLoading(true);
+    await signIn({
       email: data.cpf,
       password: data.password,
+    }).finally(() => {
+      setIsLoading(false);
     });
   };
 
@@ -53,6 +58,7 @@ export default function LoginPage() {
           </>
         }
         buttonText="Entrar"
+        isLoading={isLoading}
         onButtonClick={handleSubmit(handleSignIn)}
         bottomLink={{
           text: "Cadastre-se",

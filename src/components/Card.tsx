@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Logo from "../../public/logo.svg";
+import { Loader2 } from "lucide-react";
+import Button from "./Button";
 
 interface ICardProps {
   title: string;
@@ -16,6 +18,7 @@ interface ICardProps {
   fields: ReactNode;
   buttonText: string;
   onButtonClick: () => void;
+  isLoading?: boolean;
   bottomLink?: {
     text: string;
     href: string;
@@ -30,6 +33,7 @@ export default function Card({
   buttonText,
   onButtonClick,
   bottomLink,
+  isLoading,
 }: ICardProps) {
   return (
     <div className="bg-background border-border absolute bottom-0 m-auto w-full max-w-[var(--width-card)] rounded-t-[54px] border px-7 py-14 md:relative md:rounded-[54px] md:p-20">
@@ -52,12 +56,13 @@ export default function Card({
 
       <div className="flex flex-col gap-4">{fields}</div>
 
-      <button
+      <Button
         onClick={onButtonClick}
-        className="pointer mt-20 w-full rounded-full bg-[#008980] py-2 text-center"
+        disabled={isLoading}
+        className="mt-20 w-full"
       >
-        {buttonText}
-      </button>
+        {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : buttonText}
+      </Button>
 
       {bottomLink && (
         <div className="mt-4 text-xs">

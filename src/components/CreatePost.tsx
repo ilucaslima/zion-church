@@ -1,15 +1,20 @@
 import { usePosts } from "@/hooks/usePosts";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import Button from "./Button";
 
 const CreatePost = () => {
   const { createPost } = usePosts();
   const [content, setContent] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCreatePost = async () => {
+    setIsLoading(true);
     if (!content.trim()) return;
 
-    await createPost(content);
+    await createPost(content).finally(() => {
+      setIsLoading(false);
+    });
 
     setContent("");
     toast.success("Publicado!");
@@ -23,12 +28,15 @@ const CreatePost = () => {
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <button
+      <Button
         onClick={handleCreatePost}
-        className="bg-background-quaternary ml-auto rounded-full px-8 py-2 text-sm font-bold text-white"
+        className="ml-auto"
+        isLoading={isLoading}
+        disabled={isLoading}
+        size="sm"
       >
         Publicar
-      </button>
+      </Button>
     </div>
   );
 };
