@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  /* 
+    Colors 
+  */
+  --color-secondary: #bdbec0;
+  --color-label: #afc0d1;
+  --color-effect: #00d1c4;
+  --color-background: #122433;
+
+  --width-card: 564px;
+
+  --color-border: #1d364d;
+
+  /* 
+    Background Image
+  */
+
+  --background-image: url("/background.png");
+}
+
+body {
+  background-color: #111928;
+  color: #fff;
+  text-align: center;
+}
+
+* {
+  outline: none;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
