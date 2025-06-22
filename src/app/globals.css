@@ -10,6 +10,7 @@
   --color-background: #122433;
   --color-background-secondary: #0e1d2a;
   --color-background-tertiary: #213341;
+  --color-background-quaternary: #008980;
 
   --width-card: 564px;
 
@@ -29,7 +30,16 @@ body {
 }
 
 * {
-  outline: none;
+  /* outline: none; */
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }

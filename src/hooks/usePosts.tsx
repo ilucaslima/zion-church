@@ -8,7 +8,7 @@ import { AppError } from "./AppError";
 
 interface IPostsContextType {
   posts: IPost[];
-  createPost: (post: IPost) => Promise<void>;
+  createPost: (content: string) => Promise<void>;
   createComment: ({
     comment,
     id,
@@ -39,10 +39,10 @@ export const PostsProvider = ({ children }: { children: React.ReactNode }) => {
       });
   }, []);
 
-  const createPost = async (post: IPost) => {
+  const createPost = async (content: string) => {
     try {
-      const response = await api.post("/posts", post);
-      setPosts([...posts, response.data]);
+      const response = await api.post("/posts", { content });
+      setPosts([response.data, ...posts]);
     } catch (error) {
       if (AppError.isAxiosError(error)) {
         throw error;

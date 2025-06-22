@@ -5,12 +5,14 @@ import React from "react";
 import PostCard from "@/components/PostCard";
 import { usePosts } from "@/hooks/usePosts";
 import { formatDate } from "@/utils/format-date";
+import CreatePost from "@/components/CreatePost";
 
 const Dashboard = () => {
   const { posts } = usePosts();
 
   return (
-    <div className="flex min-h-screen flex-col items-center gap-4 p-4">
+    <div className="m-auto flex min-h-screen max-w-[524px] flex-col items-center gap-4 p-4">
+      <CreatePost />
       {posts.map((post) => {
         return (
           <PostCard

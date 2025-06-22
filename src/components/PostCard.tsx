@@ -46,7 +46,7 @@ export default function PostCard({
   };
 
   return (
-    <div className="bg-background mx-auto max-w-lg rounded-2xl border border-[#2A3B4C] p-4 text-white">
+    <div className="bg-background mx-auto w-full max-w-lg rounded-2xl border border-[#2A3B4C] p-4 text-white">
       <div className="mb-4 flex items-center">
         <Image
           src={authorAvatar}
@@ -71,10 +71,6 @@ export default function PostCard({
           <span>{commentsCount}</span>
         </div>
       </div>
-
-      {/* 
-      comments list
-      */}
 
       <div className="mb-6 flex w-full flex-col gap-4 text-left">
         {comments?.map((comment) => (
