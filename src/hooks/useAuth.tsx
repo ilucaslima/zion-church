@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const response = await api.post("/users/auth", { email, password });
       setUser(response.data.user);
       toast.success("Login realizado com sucesso");
-      Cookies.set("session", response.data.token);
+      Cookies.set("token", response.data.token);
       Cookies.set("user", JSON.stringify(response.data.user));
       router.push("/dashboard");
     } catch (error) {
