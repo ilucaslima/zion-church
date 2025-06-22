@@ -18,7 +18,7 @@ const Dashboard = () => {
           <PostCard
             key={post.id}
             id={post.id}
-            authorName={"Lucas Lima"}
+            authorName={"Anônimo"}
             authorTime={formatDate(post.createdAt)}
             authorAvatar="https://i.pravatar.cc/"
             postText={post.content}
