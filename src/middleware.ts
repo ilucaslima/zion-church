@@ -7,7 +7,7 @@ export async function middleware(req: NextRequest) {
   const privatePaths = ["/perfil", "/dashboard", "/app"];
 
   if (privatePaths.some((p) => pathname.startsWith(p))) {
-    const token = req.cookies.get("session")?.value;
+    const token = req.cookies.get("token")?.value;
 
     if (!token) {
       const url = req.nextUrl.clone();
