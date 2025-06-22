@@ -32,7 +32,7 @@ export default function PostCard({
   id,
 }: PostCardProps) {
   const [comment, setComment] = useState<string | null>(null);
-  const { createComment, likePost, posts } = usePosts();
+  const { createComment, likePost, posts, unlikePost } = usePosts();
   const { user } = useAuth();
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -73,7 +73,9 @@ export default function PostCard({
       <p className="mb-4 text-left text-gray-300">{postText}</p>
       <div className="mb-4 flex items-center gap-6 text-gray-400">
         <div className="flex items-center gap-2">
-          <button onClick={() => likePost(id)}>
+          <button
+            onClick={() => (isLikedByUser ? unlikePost(id) : likePost(id))}
+          >
             <Heart
               className={`h-5 w-5 ${isLikedByUser ? "text-red-500" : ""}`}
             />

@@ -18,6 +18,7 @@ interface IPostsContextType {
     id: string;
   }) => Promise<void>;
   likePost: (id: string) => Promise<void>;
+  unlikePost: (id: string) => Promise<void>;
 }
 
 const PostsContext = createContext<IPostsContextType>({} as IPostsContextType);
@@ -110,9 +111,32 @@ export const PostsProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const unlikePost = async (id: string) => {
+    try {
+      await api.get(`/posts/unlike/${id}`);
+      setPosts((currentPosts) =>
+        currentPosts.map((post) => {
+          if (post.id === id) {
+            return {
+              ...post,
+              likedBy: post.likedBy.filter((id) => id !== user?.id),
+              likes: post.likes - 1,
+            };
+          }
+          return post;
+        }),
+      );
+    } catch (error) {
+      if (AppError.isAxiosError(error)) {
+        throw error;
+      }
+      throw AppError.internalServerError("Erro ao descurtir post");
+    }
+  };
+
   return (
     <PostsContext.Provider
-      value={{ posts, createPost, createComment, likePost }}
+      value={{ posts, createPost, createComment, likePost, unlikePost }}
     >
       {children}
     </PostsContext.Provider>
