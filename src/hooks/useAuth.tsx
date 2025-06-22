@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "@/services/api";
 import { IAuthContextType } from "@/interfaces/context-auth";
 import { IUser } from "@/interfaces/user";
@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     password: string;
   }) => {
     try {
-      console.log(email, password);
       const response = await api.post("/users/auth", { email, password });
       setUser(response.data.user);
       toast.success("Login realizado com sucesso");
@@ -64,6 +63,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       throw AppError.internalServerError("Erro ao fazer cadastro");
     }
   };
+
+  useEffect(() => {
+    const user = Cookies.get("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, signIn, signUp }}>

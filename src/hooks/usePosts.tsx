@@ -5,6 +5,7 @@ import { api } from "@/services/api";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { AppError } from "./AppError";
+import { useAuth } from "./useAuth";
 
 interface IPostsContextType {
   posts: IPost[];
@@ -16,19 +17,20 @@ interface IPostsContextType {
     comment: string;
     id: string;
   }) => Promise<void>;
+  likePost: (id: string) => Promise<void>;
 }
 
 const PostsContext = createContext<IPostsContextType>({} as IPostsContextType);
 
 export const PostsProvider = ({ children }: { children: React.ReactNode }) => {
   const [posts, setPosts] = useState<IPost[]>([]);
+  const { user } = useAuth();
 
   useEffect(() => {
     api
       .get("/posts")
       .then((response) => {
         setPosts(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         if (AppError.isAxiosError(error)) {
@@ -85,8 +87,33 @@ export const PostsProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const likePost = async (id: string) => {
+    try {
+      await api.get(`/posts/like/${id}`);
+      setPosts((currentPosts) =>
+        currentPosts.map((post) => {
+          if (post.id === id) {
+            return {
+              ...post,
+              likedBy: [...(post.likedBy || []), user?.id as string],
+              likes: post.likes + 1,
+            };
+          }
+          return post;
+        }),
+      );
+    } catch (error) {
+      if (AppError.isAxiosError(error)) {
+        throw error;
+      }
+      throw AppError.internalServerError("Erro ao curtir post");
+    }
+  };
+
   return (
-    <PostsContext.Provider value={{ posts, createPost, createComment }}>
+    <PostsContext.Provider
+      value={{ posts, createPost, createComment, likePost }}
+    >
       {children}
     </PostsContext.Provider>
   );

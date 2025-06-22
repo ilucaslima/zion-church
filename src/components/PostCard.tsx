@@ -6,6 +6,7 @@ import { IComment } from "@/interfaces/posts";
 import { Comments } from "@/components/Comments";
 import { usePosts } from "@/hooks/usePosts";
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 interface PostCardProps {
   authorName: string;
@@ -30,8 +31,9 @@ export default function PostCard({
   comments,
   id,
 }: PostCardProps) {
-  const { createComment } = usePosts();
   const [comment, setComment] = useState<string | null>(null);
+  const { createComment, likePost, posts } = usePosts();
+  const { user } = useAuth();
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!comment?.length) return;
@@ -44,6 +46,14 @@ export default function PostCard({
     await createComment({ comment, id });
     setComment(null);
   };
+
+  const likesByUsers = posts
+    .filter((post) => post.id === id)
+    .map((post) => post.likedBy);
+
+  const isLikedByUser = JSON.stringify(likesByUsers).includes(
+    user?.id as string,
+  );
 
   return (
     <div className="bg-background mx-auto w-full max-w-lg rounded-2xl border border-[#2A3B4C] p-4 text-white">
@@ -63,7 +73,11 @@ export default function PostCard({
       <p className="mb-4 text-left text-gray-300">{postText}</p>
       <div className="mb-4 flex items-center gap-6 text-gray-400">
         <div className="flex items-center gap-2">
-          <Heart className="h-5 w-5" />
+          <button onClick={() => likePost(id)}>
+            <Heart
+              className={`h-5 w-5 ${isLikedByUser ? "text-red-500" : ""}`}
+            />
+          </button>
           <span>{likes}</span>
         </div>
         <div className="flex items-center gap-2">
