@@ -18,7 +18,7 @@ export const useSocketEvents = () => {
     const socket = getSocket();
 
     socket.on("new-post", (post: IPost) => {
-      setPosts((prevPosts: IPost[]) => [post, ...prevPosts]);
+      setPosts((prevPosts: IPost[]) => [post || [], ...prevPosts]);
     });
 
     socket.on(
@@ -39,7 +39,7 @@ export const useSocketEvents = () => {
         setPosts((prevPosts: IPost[]) => {
           return prevPosts.map((currentPost: IPost) =>
             currentPost.id === postId
-              ? { ...currentPost, likes, likedBy }
+              ? { ...currentPost, likes: likes || 0, likedBy: likedBy || [] }
               : currentPost,
           );
         });
@@ -52,7 +52,7 @@ export const useSocketEvents = () => {
       setPosts((prevPosts: IPost[]) => {
         return prevPosts.map((currentPost: IPost) =>
           currentPost.id === postId
-            ? { ...currentPost, likes, likedBy }
+            ? { ...currentPost, likes: likes || 0, likedBy: likedBy || [] }
             : currentPost,
         );
       });
@@ -74,7 +74,10 @@ export const useSocketEvents = () => {
         setPosts((prevPosts: IPost[]) => {
           return prevPosts.map((currentPost: IPost) =>
             currentPost.id === postId
-              ? { ...currentPost, comments: [...currentPost.comments, comment] }
+              ? {
+                  ...currentPost,
+                  comments: [...(currentPost.comments || []), comment],
+                }
               : currentPost,
           );
         });
