@@ -9,9 +9,11 @@ import { registerSchema, RegisterSchemaType } from "@/schemas/authSchema";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 export default function RegisterPage() {
   const { signUp } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -21,12 +23,14 @@ export default function RegisterPage() {
     resolver: zodResolver(registerSchema),
   });
 
-  const handleSignUp = (data: RegisterSchemaType) => {
-    signUp({
+  const handleSignUp = async (data: RegisterSchemaType) => {
+    setIsLoading(true);
+    await signUp({
       name: data.name,
       cpf: data.cpf,
       password: data.password,
     });
+    setIsLoading(false);
   };
 
   return (
@@ -63,6 +67,7 @@ export default function RegisterPage() {
         }
         buttonText="Cadastrar"
         onButtonClick={handleSubmit(handleSignUp)}
+        isLoading={isLoading}
         bottomLink={{
           text: "Já tenho conta",
           href: "/auth/login",
