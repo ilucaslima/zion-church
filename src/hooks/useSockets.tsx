@@ -9,7 +9,7 @@ import { useAuth } from "./useAuth";
 let listenersAdded = false;
 
 export const useSocketEvents = () => {
-  const { setPosts, posts } = usePosts();
+  const { setPosts } = usePosts();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export const useSocketEvents = () => {
     const socket = getSocket();
 
     socket.on("new-post", (post: IPost) => {
-      setPosts((prevPosts) => [post, ...prevPosts]);
+      setPosts((prevPosts: IPost[]) => [post, ...prevPosts]);
     });
 
     socket.on(
@@ -31,46 +31,30 @@ export const useSocketEvents = () => {
       }: {
         postId: string;
         likes: number;
-        likedBy: string;
+        likedBy: string[];
         userId: string;
       }) => {
-        const post = posts.find((post) => post.id === postId);
-
-        if (!post) return;
         if (userId === user?.id) return;
 
-        const newPost = {
-          ...post,
-          likes,
-          likedBy,
-        };
-
         setPosts((prevPosts: IPost[]) => {
-          const newPosts = prevPosts.map((currentPost: IPost) =>
-            currentPost.id === postId ? newPost : currentPost,
+          return prevPosts.map((currentPost: IPost) =>
+            currentPost.id === postId
+              ? { ...currentPost, likes, likedBy }
+              : currentPost,
           );
-          return newPosts;
         });
       },
     );
 
     socket.on("post-unliked", ({ postId, likes, likedBy, userId }) => {
-      const post = posts.find((post) => post.id === postId);
-
-      if (!post) return;
       if (userId === user?.id) return;
 
-      const newPost = {
-        ...post,
-        likes,
-        likedBy,
-      };
-
       setPosts((prevPosts: IPost[]) => {
-        const newPosts = prevPosts.map((currentPost: IPost) =>
-          currentPost.id === postId ? newPost : currentPost,
+        return prevPosts.map((currentPost: IPost) =>
+          currentPost.id === postId
+            ? { ...currentPost, likes, likedBy }
+            : currentPost,
         );
-        return newPosts;
       });
     });
 
@@ -88,13 +72,11 @@ export const useSocketEvents = () => {
         if (userId === user?.id) return;
 
         setPosts((prevPosts: IPost[]) => {
-          const newPosts = prevPosts.map((currentPost: IPost) =>
+          return prevPosts.map((currentPost: IPost) =>
             currentPost.id === postId
               ? { ...currentPost, comments: [...currentPost.comments, comment] }
               : currentPost,
           );
-          console.log(newPosts);
-          return newPosts;
         });
       },
     );
@@ -108,5 +90,5 @@ export const useSocketEvents = () => {
       socket.off("new-comment");
       listenersAdded = false;
     };
-  }, [setPosts, posts, user]);
+  }, [setPosts, user?.id]);
 };

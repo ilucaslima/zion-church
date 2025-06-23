@@ -19,7 +19,7 @@ interface IPostsContextType {
   }) => Promise<void>;
   likePost: (id: string) => Promise<void>;
   unlikePost: (id: string) => Promise<void>;
-  setPosts: (posts: IPost[]) => void;
+  setPosts: (posts: IPost[] | ((prevPosts: IPost[]) => IPost[])) => void;
 }
 
 const PostsContext = createContext<IPostsContextType>({} as IPostsContextType);
