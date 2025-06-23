@@ -94,8 +94,10 @@ export default function PostCard({
     user?.id as string,
   );
 
-  const handleEmojiSelect = (emoji: any) => {
-    setComment((prev) => (prev || "") + (emoji?.native || ""));
+  const handleEmojiSelect = (emoji: unknown) => {
+    setComment(
+      (prev) => (prev || "") + ((emoji as { native: string }).native || ""),
+    );
     setShowEmojiPicker(false);
     commentInputRef.current?.focus();
   };
