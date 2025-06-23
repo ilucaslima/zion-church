@@ -21,14 +21,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<IUser | null>(null);
 
   const signIn = async ({
-    email,
+    cpf,
     password,
   }: {
-    email: string;
+    cpf: string;
     password: string;
   }) => {
     try {
-      const response = await api.post("/users/auth", { email, password });
+      const response = await api.post("/users/auth", {
+        cpf,
+        password,
+        name,
+      });
       setUser(response.data.user);
       toast.success("Login realizado com sucesso");
       Cookies.set("token", response.data.token);
@@ -46,12 +50,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const signUp = async ({
     cpf,
     password,
+    name,
   }: {
     cpf: string;
     password: string;
+    name: string;
   }) => {
     try {
-      const response = await api.post("/users/", { email: cpf, password });
+      const response = await api.post("/users/", {
+        cpf: cpf,
+        password,
+        name,
+      });
       setUser(response.data);
       toast.success("Cadastro realizado com sucesso");
       router.push("/auth/login");

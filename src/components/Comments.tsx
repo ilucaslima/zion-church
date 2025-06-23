@@ -18,7 +18,7 @@ export const Comments = ({ comment }: CommentsProps) => {
       />
       <div className="bg-background-tertiary flex w-full flex-col gap-2 rounded-md p-3">
         <div className="flex items-center justify-between">
-          <b>Anônimo</b>
+          <b>{comment.name}</b>
           <span className="text-sm text-gray-400">
             {formatDate(comment.createdAt)}
           </span>

@@ -23,6 +23,7 @@ export default function RegisterPage() {
 
   const handleSignUp = (data: RegisterSchemaType) => {
     signUp({
+      name: data.name,
       cpf: data.cpf,
       password: data.password,
     });
@@ -39,6 +40,12 @@ export default function RegisterPage() {
         }}
         fields={
           <>
+            <Input
+              label="Nome"
+              placeholder="Nome"
+              {...register("name")}
+              error={errors.name?.message}
+            />
             <CpfInput
               label="CPF"
               placeholder="000.000.000-00"
@@ -46,24 +53,11 @@ export default function RegisterPage() {
               error={errors.cpf?.message}
             />
             <Input
-              label="Email"
-              placeholder="seu@email.com"
-              {...register("email")}
-              error={errors.email?.message}
-            />
-            <Input
               label="Senha"
               placeholder="Senha"
               type="PASSWORD"
               {...register("password")}
               error={errors.password?.message}
-            />
-            <Input
-              label="Confirmar Senha"
-              placeholder="Confirme sua senha"
-              type="PASSWORD"
-              {...register("confirmPassword")}
-              error={errors.confirmPassword?.message}
             />
           </>
         }

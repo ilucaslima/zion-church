@@ -24,7 +24,7 @@ export default function LoginPage() {
   const handleSignIn = async (data: LoginSchemaType) => {
     setIsLoading(true);
     await signIn({
-      email: data.cpf,
+      cpf: data.cpf,
       password: data.password,
     }).finally(() => {
       setIsLoading(false);

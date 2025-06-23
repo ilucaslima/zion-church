@@ -8,6 +8,7 @@ export interface IPost {
   likes: number;
   likedBy: string[];
   comments: IComment[];
+  authorName: string;
 }
 
 export interface IComment {
@@ -17,4 +18,5 @@ export interface IComment {
   updatedAt: string;
   postId: string;
   authorId: string;
+  name: string;
 }

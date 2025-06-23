@@ -6,9 +6,8 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
-  email: z.string().email("Email inválido"),
+  name: z.string().min(3, "Nome deve ter pelo menos 3 caracteres"),
   password: z.string().min(8, "Senha deve ter pelo menos 8 caracteres"),
-  confirmPassword: z.string().min(8, "Senha deve ter pelo menos 8 caracteres"),
   cpf: z.string().min(11, "CPF inválido"),
 });
 

@@ -28,6 +28,8 @@ export const PostsProvider = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
 
   useEffect(() => {
+    if (!user) return;
+
     api
       .get("/posts")
       .then((response) => {
@@ -40,7 +42,7 @@ export const PostsProvider = ({ children }: { children: React.ReactNode }) => {
 
         throw AppError.internalServerError("Erro ao buscar posts");
       });
-  }, []);
+  }, [user]);
 
   const createPost = async (content: string) => {
     try {
