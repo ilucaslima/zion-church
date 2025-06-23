@@ -13,6 +13,7 @@ import { Comments } from "@/components/Comments";
 import { usePosts } from "@/hooks/usePosts";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import Picker from "@emoji-mart/react";
 
 interface PostCardProps {
   authorName: string;
@@ -48,6 +49,8 @@ export default function PostCard({
   const [filePreview, setFilePreview] = useState<string | undefined>(undefined);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const commentInputRef = useRef<HTMLInputElement>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!comment?.length) return;
@@ -90,6 +93,12 @@ export default function PostCard({
   const isLikedByUser = JSON.stringify(likesByUsers).includes(
     user?.id as string,
   );
+
+  const handleEmojiSelect = (emoji: any) => {
+    setComment((prev) => (prev || "") + (emoji?.native || ""));
+    setShowEmojiPicker(false);
+    commentInputRef.current?.focus();
+  };
 
   return (
     <div className="bg-background mx-auto w-full max-w-lg rounded-2xl border border-[#2A3B4C] p-4 text-white">
@@ -176,6 +185,7 @@ export default function PostCard({
               onChange={(e) => setComment(e.target.value)}
               onKeyDown={handleKeyDown}
               value={comment || ""}
+              ref={commentInputRef}
             />
 
             <div className="flex items-center gap-2">
@@ -191,7 +201,15 @@ export default function PostCard({
                 <ImageIcon className="h-5 w-5 text-gray-400" />
               </button>
 
-              <Smile className="h-5 w-5 cursor-pointer text-gray-400" />
+              <Smile
+                className="h-5 w-5 cursor-pointer text-gray-400"
+                onClick={() => setShowEmojiPicker((v) => !v)}
+              />
+              {showEmojiPicker && (
+                <div className="absolute top-full right-0 z-10 mt-2">
+                  <Picker onEmojiSelect={handleEmojiSelect} />
+                </div>
+              )}
             </div>
           </div>
         )}
