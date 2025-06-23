@@ -9,13 +9,14 @@ import { useAuth } from "./useAuth";
 
 interface IPostsContextType {
   posts: IPost[];
-  createPost: (content: string) => Promise<void>;
+  createPost: (content: string, file?: File) => Promise<void>;
   createComment: ({
     comment,
     id,
   }: {
     comment: string;
     id: string;
+    file?: File;
   }) => Promise<void>;
   likePost: (id: string) => Promise<void>;
   unlikePost: (id: string) => Promise<void>;
@@ -45,9 +46,14 @@ export const PostsProvider = ({ children }: { children: React.ReactNode }) => {
       });
   }, [user]);
 
-  const createPost = async (content: string) => {
+  const createPost = async (content: string, file?: File) => {
     try {
-      const response = await api.post("/posts", { content });
+      const formData = new FormData();
+      formData.append("content", content);
+      if (file) {
+        formData.append("image", file);
+      }
+      const response = await api.post("/posts", formData);
       setPosts([response.data, ...posts]);
     } catch (error) {
       if (AppError.isAxiosError(error)) {
@@ -61,14 +67,20 @@ export const PostsProvider = ({ children }: { children: React.ReactNode }) => {
   const createComment = async ({
     comment,
     id,
+    file,
   }: {
     comment: string;
     id: string;
+    file?: File;
   }) => {
     try {
-      const response = await api.post(`/posts/comment/${id}`, {
-        content: comment,
-      });
+      const formData = new FormData();
+      formData.append("content", comment);
+
+      if (file) {
+        formData.append("image", file);
+      }
+      const response = await api.post(`/posts/comment/${id}`, formData);
 
       const newComment = response.data;
 

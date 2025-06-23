@@ -34,6 +34,8 @@ const Dashboard = () => {
             commentsCount={post.comments?.length}
             userAvatar="https://i.pravatar.cc/"
             comments={post.comments}
+            postImage={post?.image}
+            postName={post?.imageName}
           />
         );
       })}

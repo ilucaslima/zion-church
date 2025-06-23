@@ -4,9 +4,15 @@ import { IComment } from "@/interfaces/posts";
 
 interface CommentsProps {
   comment: IComment;
+  commentImage?: string;
+  commentName?: string;
 }
 
-export const Comments = ({ comment }: CommentsProps) => {
+export const Comments = ({
+  comment,
+  commentImage,
+  commentName,
+}: CommentsProps) => {
   return (
     <div key={comment.id} className="flex w-full items-center gap-4">
       <Image
@@ -23,6 +29,15 @@ export const Comments = ({ comment }: CommentsProps) => {
             {formatDate(comment.createdAt)}
           </span>
         </div>
+        {commentImage && (
+          <Image
+            src={commentImage}
+            alt={commentName || "Comment image"}
+            width={100}
+            height={100}
+            className="rounded-md"
+          />
+        )}
         <p>{comment.content}</p>
       </div>
     </div>
