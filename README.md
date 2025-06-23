@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🕊️ Comunidade Zion Church (Teste)
 
-## Getting Started
+Um mini-blog desenvolvido. Os usuários podem se **cadastrar**, **publicar posts**, **curtir**, e **comentar** em tempo real.
 
-First, run the development server:
+---
+
+## 🚀 Tecnologias utilizadas
+
+- **Next.js**  
+- **TypeScript**  
+- **Tailwind CSS**  
+- **Socket.IO**  
+- **Zod**  
+- **Axios**  
+- **Context API**
+
+---
+
+## 📸 Demo
+
+### ✅ Acesse a aplicação online:
+
+🔗 [https://main.d3irzwyefrngyh.amplifyapp.com/](https://main.d3irzwyefrngyh.amplifyapp.com/)
+
+---
+
+### 📷 Screenshot:
+
+*(Substitua o arquivo abaixo com o seu print real)*
+
+![Demo da aplicação](./screenshot.png)
+
+---
+
+## 🛠️ Como rodar localmente
 
 ```bash
-npm run dev
-# or
+# Instale as dependências
+yarn install
+# ou
+npm install
+
+# Rode o projeto
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# ou
+npm run dev
+
+Acesse: https://localhost:3000/
 ```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💬 Sobre o projeto
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+O objetivo foi criar uma aplicação web com funcionalidades de interação social em tempo real, utilizando tecnologias modernas como Next.js, Socket.IO e Tailwind CSS.
+Além de focar na experiência do usuário, o projeto também serve para demonstrar habilidades com TypeScript, Context API, e validação de dados com Zod.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📌 Funcionalidades principais
+✅ Cadastro e autenticação de usuários
+✅ Publicação de novos posts
+✅ Feed com listagem de posts
+✅ Sistema de likes com atualização em tempo real
+✅ Comentários em posts (também em tempo real)
+✅ Design responsivo com Tailwind CSS
+✅ Validação de formulários com Zod
+✅ Consumo de API com Axios
+✅ Comunicação via WebSocket para interações instantâneas
+✅ Estrutura de estado global com Context API
