@@ -22,15 +22,7 @@ Um mini-blog desenvolvido. Os usuários podem se **cadastrar**, **publicar posts
 
 🔗 [https://main.d3irzwyefrngyh.amplifyapp.com/](https://main.d3irzwyefrngyh.amplifyapp.com/)
 
----
-
-### 📷 Screenshot:
-
-*(Substitua o arquivo abaixo com o seu print real)*
-
-![Demo da aplicação](./screenshot.png)
-
----
+----
 
 ## 🛠️ Como rodar localmente
 
