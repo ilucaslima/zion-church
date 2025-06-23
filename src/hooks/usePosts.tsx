@@ -19,6 +19,7 @@ interface IPostsContextType {
   }) => Promise<void>;
   likePost: (id: string) => Promise<void>;
   unlikePost: (id: string) => Promise<void>;
+  setPosts: (posts: IPost[]) => void;
 }
 
 const PostsContext = createContext<IPostsContextType>({} as IPostsContextType);
@@ -138,7 +139,14 @@ export const PostsProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <PostsContext.Provider
-      value={{ posts, createPost, createComment, likePost, unlikePost }}
+      value={{
+        posts,
+        createPost,
+        createComment,
+        likePost,
+        unlikePost,
+        setPosts,
+      }}
     >
       {children}
     </PostsContext.Provider>

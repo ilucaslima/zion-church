@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/hooks/useAuth";
@@ -6,15 +7,12 @@ import { PostsProvider } from "@/hooks/usePosts";
 
 import { ToastContainer } from "react-toastify";
 
+import { SocketEvents } from "@/components/SocketEvents";
+
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
 });
-
-export const metadata: Metadata = {
-  title: "Comunidade Zion Church",
-  description: "Comunidade Zion Church",
-};
 
 export default function RootLayout({
   children,
@@ -25,7 +23,10 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${montserrat.variable} antialiased`}>
         <AuthProvider>
-          <PostsProvider>{children}</PostsProvider>
+          <PostsProvider>
+            <SocketEvents />
+            {children}
+          </PostsProvider>
         </AuthProvider>
         <ToastContainer />
       </body>
