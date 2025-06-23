@@ -6,12 +6,20 @@ import PostCard from "@/components/PostCard";
 import { usePosts } from "@/hooks/usePosts";
 import { formatDate } from "@/utils/format-date";
 import CreatePost from "@/components/CreatePost";
+import Image from "next/image";
 
 const Dashboard = () => {
   const { posts } = usePosts();
 
   return (
     <div className="m-auto flex min-h-screen max-w-[524px] flex-col items-center gap-4 p-4">
+      <Image
+        src="/logo.png"
+        alt="logo"
+        width={250}
+        height={250}
+        className="py-24"
+      />
       <CreatePost />
       {posts.map((post) => {
         return (

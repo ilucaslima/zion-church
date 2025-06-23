@@ -21,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${montserrat.variable} antialiased`}>
+      <body
+        className={`${montserrat.variable} bg-[url('/background.png')] bg-cover bg-center antialiased`}
+      >
         <AuthProvider>
           <PostsProvider>
             <SocketEvents />

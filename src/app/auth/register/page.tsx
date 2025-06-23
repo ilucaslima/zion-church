@@ -30,7 +30,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-[url('/background.png')] bg-cover bg-center">
+    <div className="flex h-screen w-screen items-center justify-center">
       <Card
         title="Crie sua conta"
         description="Já tem uma conta?"

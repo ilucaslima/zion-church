@@ -32,7 +32,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-[url('/background.png')] bg-cover bg-center">
+    <div className="flex h-screen w-screen items-center justify-center">
       <Card
         title="Acesse sua conta"
         description="Não tem acesso a plataforma?"
