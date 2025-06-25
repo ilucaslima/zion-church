@@ -127,7 +127,7 @@ export default function PostCard({
           />
         </div>
       )}
-      <p className="mb-4 text-left text-gray-300">{postText}</p>
+      <p className="mb-4 text-left text-gray-300 break-all">{postText}</p>
       <div className="mb-4 flex items-center gap-6 text-gray-400">
         <div className="flex items-center gap-2">
           <button
